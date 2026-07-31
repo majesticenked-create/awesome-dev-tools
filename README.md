@@ -143,6 +143,7 @@ We encourage contributions from the community, so if you have a favorite develop
 - [ByteTools QR Generator](https://bytetools.io/qr-generator/) - Generate QR codes including WiFi QR codes. Works offline.
 - [ByteTools Regex Test](https://bytetools.io/regex-tester/) - Free regex test tool with real-time matching and examples.
 - [ByteTools URL Encoder](https://bytetools.io/url-encoder/) - Encode and decode URLs safely for query parameters and API endpoints.
+- [Text Dedupe](https://textdedupe.com) - Remove duplicate/blank lines and clean up messy text entirely in-browser. No upload, no signup.
 
 ##### Client-side
 
