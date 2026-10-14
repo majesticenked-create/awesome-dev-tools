@@ -13,7 +13,7 @@ The calculations are now verified, but the two High items that need the Notion a
 | Formulas and relations | 4 (P-01 to P-04) | 0 | 0 | 5 (U-01 to U-05) |
 | Data integrity | 2 (P-05, P-06) | 0 | 0 | 1 (U-08) |
 | Approved changes: chart, name | 2 (P-07, P-08) | 0 | 0 | 0 |
-| Copy and navigation | 3 (P-09 to P-11) | 0 | 0 | 0 |
+| Copy and navigation | 4 (P-09 to P-12) | 0 | 0 | 0 |
 | Buttons and templates | 0 | 0 | 2 (B-01, B-02) | 0 |
 | Duplication and editions | 0 | 0 | 2 (B-03, B-04) | 0 |
 | Free-plan chart behavior | 0 | 0 | 2 (B-05, B-06) | 0 |

@@ -13,7 +13,7 @@ Nothing below is marked passed.
 | Dev copy made by native Duplicate has all 10 pages and 21 databases | Yes (Phase 2) | Fetch |
 | Relations, rollups and all linked views point at the copy's own databases | Yes (Phase 2, re-checked for views changed in Phase 9) | Fetch |
 | Seller-only pages (SELLER NOTES, Finishing checklist, QA harness, QA TEMP records) are outside the product tree | Yes | They sit under "LifeOS SELLER NOTES", which is a separate top-level page; the hub fetch shows no link to it |
-| One chart left in the product | Yes | Mind and Money pages fetched; source databases Budget Categories and Daily Log have no chart tabs |
+| One chart left in the product | Yes | All 21 source databases (22 views, all tables) and all 35 linked-view blocks (38 views) on the 8 dashboard pages fetched on 2026-10-14. The only chart is Money → Spending by category |
 
 ## Test script for each edition (Example, then Blank), in a separate free account
 

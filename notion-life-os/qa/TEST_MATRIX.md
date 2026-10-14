@@ -12,7 +12,8 @@ PASS means the test was run and the result was observed. Nothing is marked PASS 
 | P-04 | Relations | Rollups update through relations: project from tasks; goal from tasks, and from projects when no tasks are linked; budget from transactions | E-P1, E-G1, E-B1 |
 | P-05 | Data integrity | Production: 21/21 schemas match the baseline; relations point at production only; `noop_check` absent; 120/120 rows; 5/5 spot checks unchanged | PRODUCTION_INTEGRITY_CHECK.md |
 | P-06 | Data integrity | Dev copy back to original sample data after tests: edge views empty, sample values re-checked, probe columns removed and schemas read back | FORMULA_TEST_RESULTS.md (Clean-up) |
-| P-07 | Charts | Habit trend chart removed from Mind; Habit tracker and Habit Bar intact | CHANGELOG.md, page fetch |
+| P-07 | Charts | Habit trend chart removed from Mind; Habit tracker and Habit Bar intact; full sweep of all 60 views finds exactly 1 chart | CHANGELOG.md, page and database fetches |
+| P-12 | Name | No "Life Hub" text left on the 8 customer pages | Page fetches |
 | P-08 | Name | LifeOS rename on Hub, Start Here, Databases page and seller notes; non-affiliation notice present; hub links and mentions resolve | CHANGELOG.md, NAVIGATION_AND_MOBILE_QA.md |
 | P-09 | Copy | No em dashes in new customer copy | Page fetches |
 | P-10 | Navigation | Hub has no link to seller-only pages | NAVIGATION_AND_MOBILE_QA.md |
