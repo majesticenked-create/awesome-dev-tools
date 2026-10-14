@@ -12,15 +12,17 @@ Paste these into Creative Market's product editor (Shop › Products › Add a p
 
 The Creative Market PDFs differ from the Etsy ones only in the terms text: the cover and quick-start guide say the files are covered by the Creative Market license the buyer purchased, instead of "personal use only".
 
-## Product name
+## Product name (Creative Market limit: 36 characters)
 
 ```
-The Calm Move: Printable & Fillable Moving Planner
+Moving Planner Printable & Fillable
 ```
+
+35 characters. Alternative: `Fillable Moving Planner & Box Labels` (36).
 
 ## Category
 
-Templates. Pick the planner category if the editor offers one; otherwise the closest print / stationery category.
+**Templates & Themes › Print › Stationery**. Creative Market has no planner category; Stationery is where planners and printables are listed.
 
 ## Tags
 
