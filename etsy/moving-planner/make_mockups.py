@@ -148,31 +148,97 @@ def filled_sample():
 
 
 # ---------------------------------------------------------------- images
+def soft_background(top, bottom, blobs):
+    """Vertical gradient with large blurred color blobs."""
+    grad = Image.new("RGB", (1, H))
+    for yy in range(H):
+        t = yy / (H - 1)
+        grad.putpixel((0, yy), tuple(int(a + (b - a) * t) for a, b in zip(top, bottom)))
+    img = grad.resize((W, H))
+    for cx, cy, r, col in blobs:
+        # blur a mask rather than an RGBA layer, so no dark fringes bleed in
+        mask = Image.new("L", (W, H), 0)
+        ImageDraw.Draw(mask).ellipse([cx - r, cy - r, cx + r, cy + r], fill=col[3])
+        mask = mask.filter(ImageFilter.GaussianBlur(160))
+        img.paste(Image.new("RGB", (W, H), col[:3]), (0, 0), mask)
+    return img
+
+
+def sticker(w, h, color, title, sub, title_font, sub_font):
+    """A cut-out label with a white margin, like the ones in the planner."""
+    t = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(t)
+    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=34, fill=WHITE)
+    d.rounded_rectangle([18, 18, w - 19, h - 19], radius=24, fill=color)
+    tw = d.textlength(title, font=title_font)
+    tb = d.textbbox((0, 0), title, font=title_font)
+    th = tb[3] - tb[1]
+    gap = 18 if sub else 0
+    sb = d.textbbox((0, 0), sub, font=sub_font) if sub else (0, 0, 0, 0)
+    total = th + gap + (sb[3] - sb[1])
+    y0 = (h - total) / 2 - tb[1]
+    d.text(((w - tw) / 2, y0), title, font=title_font, fill=INK)
+    if sub:
+        sw = d.textlength(sub, font=sub_font)
+        d.text(((w - sw) / 2, y0 + tb[1] + th + gap - sb[1]), sub, font=sub_font, fill=INK)
+    return t
+
+
+def box_label_sticker(w, h, color, code, room, note):
+    t = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(t)
+    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=30, fill=WHITE)
+    d.rounded_rectangle([20, 20, w - 21, 150], radius=20, fill=color)
+    d.text((48, 26), code, font=SERIF_B(110), fill=INK)
+    rw = d.textlength(room, font=SANS_B(40))
+    d.text((w - 48 - rw, 66), room, font=SANS_B(40), fill=INK)
+    d.text((48, 190), "BOX #", font=SANS_SB(30), fill=MUTED)
+    d.text((170, 172), "07", font=SERIF_I(64), fill=INK)
+    d.line([160, 246, w - 48, 246], fill=(201, 207, 204), width=3)
+    d.text((48, 270), note, font=SERIF_I(56), fill=INK)
+    d.line([48, 342, w - 48, 342], fill=(201, 207, 204), width=3)
+    return t
+
+
 def img1_hero(pk):
-    img = canvas()
+    img = soft_background((250, 246, 240), (245, 236, 226), [
+        (2350, 380, 700, (214, 230, 220, 255)),
+        (2050, 2050, 620, (247, 221, 207, 255)),
+        (420, 2050, 480, (246, 234, 206, 200)),
+    ])
     d = ImageDraw.Draw(img)
-    # left: copy
-    x = 170
-    caps(d, x, 300, "Printable + fillable", SANS_SB(46), SAGE, 9)
-    d.text((x, 380), "Moving", font=SERIF(250), fill=INK)
-    d.text((x, 620), "Planner", font=SERIF(250), fill=INK)
-    d.text((x + 8, 900), "The Calm Move by " + SHOP, font=SERIF_I(72), fill=CLAY)
-    y = 1100
-    for s in ["51 pages, week-by-week timeline", "Color-coded box labels + room signs",
-              "Type on screen or print it out", "US Letter + A4 included", "Clickable contents & tabs"]:
-        d.ellipse([x, y + 14, x + 26, y + 40], fill=SAGE)
-        d.text((x + 52, y), s, font=SANS_M(52), fill=INK)
-        y += 96
-    # right: fanned pages
-    paste_page(img, page_img(pk["Room door signs 1"]), 1930, 300, 900, angle=-8)
-    paste_page(img, page_img(pk["Box labels: Kitchen"]), 1680, 210, 940, angle=4)
-    paste_page(img, page_img(1), 1260, 330, 1000)
-    # badge
-    cx, cy, r = 1220, 1900, 190
+    # ---- copy (left, inside the square-crop safe zone x 375..2625)
+    x = 400
+    caps(d, x + 4, 330, "Printable + fillable", SANS_SB(46), SAGE, 9)
+    d.text((x - 6, 390), "Moving", font=SERIF(270), fill=INK)
+    d.text((x - 6, 650), "Planner", font=SERIF(270), fill=INK)
+    d.text((x + 4, 965), "The Calm Move", font=SERIF_I(96), fill=CLAY)
+    y = 1150
+    for s, col in [("51 pages", CLAY), ("Fillable + printable", SAGE), ("US Letter + A4", (184, 149, 74)),
+                   ("Color-coded box labels", (111, 136, 160))]:
+        f = SANS_SB(46)
+        w = d.textlength(s, font=f) + 2 * 40 + 40
+        d.rounded_rectangle([x, y, x + w, y + 100], radius=50, fill=WHITE)
+        d.ellipse([x + 34, y + 37, x + 60, y + 63], fill=col)
+        d.text((x + 80, y + 24), s, font=f, fill=INK)
+        y += 124
+    # ---- composition (right)
+    paste_page(img, page_img(pk["Room door signs 1"]), 1300, 330, 800, angle=9)
+    paste_page(img, page_img(pk["Special labels"]), 1980, 250, 800, angle=-8)
+    paste_page(img, page_img(1, dpi=200), 1560, 330, 900)
+    # loose cut-out labels as props
+    paste_page(img, sticker(470, 270, (233, 180, 158), "FRAGILE", "Handle with care", SANS_B(72), SANS(34)),
+               1280, 1420, 470, angle=11)
+    paste_page(img, sticker(470, 270, (169, 197, 178), "OPEN FIRST", "Essentials inside", SANS_B(64), SANS(34)),
+               2150, 1430, 470, angle=-9)
+    paste_page(img, box_label_sticker(560, 380, (233, 180, 158), "K", "KITCHEN", "Pots & pans"),
+               1660, 1600, 560, angle=-3)
+    # badge on the cover corner
     d = ImageDraw.Draw(img)
+    cx, cy, r = 2420, 380, 150
     d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CLAY)
-    text_c(d, cx, cy - 130, "51", SERIF_B(170), WHITE)
-    caps(d, cx, cy + 70, "pages", SANS_SB(42), WHITE, 8, center=True)
+    text_c(d, cx, cy - 112, "51", SERIF_B(140), WHITE)
+    caps(d, cx, cy + 50, "pages", SANS_SB(34), WHITE, 7, center=True)
     save(img, "01-hero.jpg")
 
 
