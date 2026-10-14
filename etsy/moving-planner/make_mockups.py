@@ -12,6 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PDF = os.path.join(HERE, "dist", "The-Calm-Move-Moving-Planner-US-Letter.pdf")
 PDF_A4 = os.path.join(HERE, "dist", "The-Calm-Move-Moving-Planner-A4.pdf")
 OUT = os.path.join(HERE, "mockups")
+MARKET = "etsy"  # or "creative-market": changes the marketplace wording on image 10
 F = os.path.join(HERE, "fonts")
 W, H = 3000, 2250
 
@@ -40,19 +41,20 @@ TMP = tempfile.mkdtemp()
 _cache = {}
 
 
-def page_img(n, pdf=PDF, dpi=170):
+def page_img(n, pdf=None, dpi=170):
+    pdf = pdf or PDF
     key = (n, pdf, dpi)
     if key not in _cache:
-        base = os.path.join(TMP, f"{os.path.basename(pdf)}-{dpi}-{n}")
+        base = os.path.join(TMP, f"{len(_cache)}-{os.path.basename(pdf)}-{dpi}-{n}")
         subprocess.run(["pdftoppm", "-r", str(dpi), "-png", "-singlefile", "-f", str(n), "-l", str(n), pdf, base],
                        check=True)
         _cache[key] = Image.open(base + ".png").convert("RGB")
     return _cache[key]
 
 
-def page_key(pdf=PDF):
+def page_key(pdf=None):
     """Map bookmark titles -> 1-based page numbers so mockups survive page reordering."""
-    r = PdfReader(pdf)
+    r = PdfReader(pdf or PDF)
     return {o.title: r.get_destination_page_number(o) + 1 for o in r.outline}
 
 
@@ -400,7 +402,8 @@ def img9_contents(pk):
 def img10_how(pk):
     img = canvas(CREAM)
     d = header(img, "Instant digital download", "How it works")
-    steps = [("1", "Purchase", "Your files are ready right away\nin Etsy > Purchases."),
+    where = "in Etsy > Purchases." if MARKET == "etsy" else "in your Creative Market downloads."
+    steps = [("1", "Purchase", "Your files are ready right away\n" + where),
              ("2", "Download", "Two PDFs: US Letter and A4,\nplus a quick-start guide."),
              ("3", "Fill or print", "Type on any device, or print\nonly the pages you need.")]
     bw = 760
@@ -414,8 +417,99 @@ def img10_how(pk):
         text_c(d, cx, 1010, h, SERIF(96))
         for j, line in enumerate(body.split("\n")):
             text_c(d, cx, 1180 + j * 76, line, SANS(48), MUTED)
-    text_c(d, W / 2, 1810, "No physical item will be shipped. For personal use only.", SANS_M(46), MUTED)
+    note = "No physical item will be shipped." + (" For personal use only." if MARKET == "etsy" else "")
+    text_c(d, W / 2, 1810, note, SANS_M(46), MUTED)
     save(img, "10-how-it-works.jpg")
+
+
+def hero_wide(pk):
+    """3:2 hero (3000x2000) for marketplaces with landscape thumbnails, e.g. Creative Market."""
+    global W, H
+    saved = (W, H)
+    W, H = 3000, 2000
+    try:
+        img = soft_background((250, 246, 240), (245, 236, 226), [
+            (2450, 260, 700, (214, 230, 220, 255)),
+            (2050, 1900, 620, (247, 221, 207, 255)),
+            (380, 1850, 480, (246, 234, 206, 200)),
+        ])
+        d = ImageDraw.Draw(img)
+        x = 230
+        caps(d, x + 4, 250, "Printable + fillable", SANS_SB(46), SAGE, 9)
+        d.text((x - 6, 305), "Moving", font=SERIF(250), fill=INK)
+        d.text((x - 6, 545), "Planner", font=SERIF(250), fill=INK)
+        d.text((x + 4, 830), "The Calm Move", font=SERIF_I(92), fill=CLAY)
+        y = 1010
+        for s_, col in [("51 pages", CLAY), ("Fillable + printable", SAGE), ("US Letter + A4", (184, 149, 74)),
+                        ("Color-coded box labels", (111, 136, 160))]:
+            f = SANS_SB(46)
+            w = d.textlength(s_, font=f) + 120
+            d.rounded_rectangle([x, y, x + w, y + 100], radius=50, fill=WHITE)
+            d.ellipse([x + 34, y + 37, x + 60, y + 63], fill=col)
+            d.text((x + 80, y + 24), s_, font=f, fill=INK)
+            y += 122
+        y += 40
+        sw = 100
+        for i, (code, col) in enumerate([("K", "#E9B49E"), ("L", "#A9C5B2"), ("D", "#EBD394"), ("B1", "#A9C0D8"),
+                                         ("B2", "#CBB8D8"), ("BA", "#9ED2CD"), ("O", "#D9C4A7"), ("G", "#C2C3BA")]):
+            sx = x + i * (sw + 12)
+            d.rounded_rectangle([sx, y, sx + sw, y + sw], radius=20, fill=col)
+            f = SERIF_B(48 if len(code) == 1 else 40)
+            tw = d.textlength(code, font=f)
+            bb = d.textbbox((0, 0), code, font=f)
+            d.text((sx + (sw - tw) / 2, y + (sw - (bb[3] - bb[1])) / 2 - bb[1]), code, font=f, fill=INK)
+        paste_page(img, page_img(pk["Room door signs 1"]), 1420, 200, 740, angle=9)
+        paste_page(img, page_img(pk["Special labels"]), 2060, 140, 720, angle=-8)
+        paste_page(img, page_img(1, dpi=200), 1580, 170, 860)
+        paste_page(img, sticker(500, 290, (233, 180, 158), "FRAGILE", "Handle with care", SANS_B(78), SANS(36)),
+                   1390, 1250, 500, angle=10)
+        paste_page(img, sticker(500, 290, (169, 197, 178), "OPEN FIRST", "Essentials inside", SANS_B(68), SANS(36)),
+                   2290, 1230, 500, angle=-9)
+        paste_page(img, box_label_sticker(600, 400, (233, 180, 158), "K", "KITCHEN", "Pots & pans"),
+                   1800, 1380, 600, angle=-3)
+        d = ImageDraw.Draw(img)
+        cx, cy, r = 2440, 230, 150
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CLAY)
+        text_c(d, cx, cy - 112, "51", SERIF_B(140), WHITE)
+        caps(d, cx, cy + 50, "pages", SANS_SB(34), WHITE, 7, center=True)
+        save(img, "01-hero.jpg")
+    finally:
+        W, H = saved
+
+
+def to_3x2(src, dst, size=(3640, 2428)):
+    """Pad a 4:3 image to 3:2 with its own (flat) background color, then resize."""
+    im = Image.open(src).convert("RGB")
+    w, h = im.size
+    if w / h < 1.5:
+        nw = round(h * 1.5)
+        c = Image.new("RGB", (nw, h), im.getpixel((4, 4)))
+        c.paste(im, ((nw - w) // 2, 0))
+        im = c
+    im.resize(size, Image.LANCZOS).save(dst, "JPEG", quality=90, optimize=True)
+    print(dst)
+
+
+def build_creative_market():
+    global PDF, PDF_A4, OUT, MARKET
+    saved = (PDF, PDF_A4, OUT, MARKET)
+    cm = os.path.join(HERE, "dist-creative-market")
+    PDF = os.path.join(cm, "The-Calm-Move-Moving-Planner-US-Letter.pdf")
+    PDF_A4 = os.path.join(cm, "The-Calm-Move-Moving-Planner-A4.pdf")
+    OUT = tempfile.mkdtemp()
+    MARKET = "creative-market"
+    try:
+        pk = page_key()
+        hero_wide(pk)
+        for fn in [img2_inside, img3_system, img4_timeline, img5_fillable,
+                   img6_admin, img7_settle, img8_sizes, img9_contents, img10_how]:
+            fn(pk)
+        final = os.path.join(HERE, "mockups-creative-market")
+        os.makedirs(final, exist_ok=True)
+        for name in sorted(os.listdir(OUT)):
+            to_3x2(os.path.join(OUT, name), os.path.join(final, name))
+    finally:
+        PDF, PDF_A4, OUT, MARKET = saved
 
 
 if __name__ == "__main__":
@@ -423,3 +517,4 @@ if __name__ == "__main__":
     for fn in [img1_hero, img2_inside, img3_system, img4_timeline, img5_fillable,
                img6_admin, img7_settle, img8_sizes, img9_contents, img10_how]:
         fn(pk)
+    build_creative_market()

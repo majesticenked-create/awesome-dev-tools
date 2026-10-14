@@ -51,6 +51,28 @@ ROOMS = [
 SHOP = "CropUp Creative"
 BRAND = "THE CALM MOVE  ·  " + SHOP.upper()
 
+# Marketplace-specific wording. Creative Market sells under its own Standard / Extended
+# licenses, so that edition drops "personal use only" and points buyers to their license.
+EDITIONS = {
+    "etsy": {
+        "dist": "dist",
+        "cover_legal": f"© 2026 {SHOP}. For personal use only. Please do not share or resell.",
+        "terms": f"© 2026 {SHOP}. For personal use only. Please don't share, resell or redistribute the files. "
+                 "No physical item will be shipped.",
+        "help": f"Questions or a problem with your files? Message {SHOP} through Etsy and I'll help. "
+                "If the planner made your move calmer, a review means the world to a small shop.",
+    },
+    "creative-market": {
+        "dist": "dist-creative-market",
+        "cover_legal": f"© 2026 {SHOP}. All rights reserved.",
+        "terms": f"© 2026 {SHOP}. Your use of these files is covered by the Creative Market license you "
+                 "purchased. Please don't share or redistribute the files themselves.",
+        "help": f"Questions or a problem with your files? Message {SHOP} through Creative Market. "
+                "If the planner made your move calmer, a review means the world to a small shop.",
+    },
+}
+ED = EDITIONS["etsy"]
+
 
 def wrap(text, font, size, width):
     words, lines, cur = text.split(), [], ""
@@ -561,7 +583,7 @@ def p_cover(p):
         y -= 34
     p.caps(W / 2, M + 26, "Fillable  ·  Printable  ·  Color-coded box system", MUTED, 7, "center")
     p.text(W / 2, H * 0.38 - 168, "by " + SHOP, "Serif-Italic", 13, CLAY, "center")
-    p.text(W / 2, M + 4, f"© 2026 {SHOP}. For personal use only. Please do not share or resell.",
+    p.text(W / 2, M + 4, ED["cover_legal"],
            "Sans", 6.8, MUTED, "center")
 
 
@@ -1392,21 +1414,22 @@ def build_readme(path):
                      "and signs look best in color; everything else prints well in black and white."),
         ("Box labels tip", "Print labels on sticker paper (full-sheet label paper), or on plain paper and attach "
                            "them with clear packing tape. Put one on top and one on the side of each box."),
-        ("Terms of use", f"© 2026 {SHOP}. For personal use only. Please don't share, resell or redistribute the files. "
-                         "No physical item will be shipped."),
+        ("Terms of use", ED["terms"]),
     ]
     for h, body in blocks:
         p.text(p.M, y, h, "Serif-Bold", 13)
         y = p.para(p.M, y - 17, body, p.CW, 9.6, color=MUTED) - 14
-    p.tip(p.M, y, p.CW, f"Questions or a problem with your files? Message {SHOP} through Etsy and I'll help. "
-                        "If the planner made your move calmer, a review means the world to a small shop.", "Help")
+    p.tip(p.M, y, p.CW, ED["help"], "Help")
     p.save()
 
 
 if __name__ == "__main__":
-    os.makedirs(DIST, exist_ok=True)
-    for label, size in [("US-Letter", letter), ("A4", A4)]:
-        out = os.path.join(DIST, f"The-Calm-Move-Moving-Planner-{label}.pdf")
-        n = build(out, size)
-        print(f"{out}  ({n} pages, {os.path.getsize(out) // 1024} KB)")
-    build_readme(os.path.join(DIST, "READ-ME-Quick-Start.pdf"))
+    for key, ed in EDITIONS.items():
+        ED = ed
+        dist = os.path.join(HERE, ed["dist"])
+        os.makedirs(dist, exist_ok=True)
+        for label, size in [("US-Letter", letter), ("A4", A4)]:
+            out = os.path.join(dist, f"The-Calm-Move-Moving-Planner-{label}.pdf")
+            n = build(out, size)
+            print(f"{out}  ({n} pages, {os.path.getsize(out) // 1024} KB)")
+        build_readme(os.path.join(dist, "READ-ME-Quick-Start.pdf"))
