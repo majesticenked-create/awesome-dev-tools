@@ -2,7 +2,11 @@
 
 ## Status: INCOMPLETE (manual build required)
 
-Checked 2026-10-14: this session has no browser or computer-use tool, and the Notion connector cannot create, edit or click button blocks or database templates. Nothing below has been built or tested. Every item stays **INCOMPLETE** until the owner builds it in the Notion app and records the result in the "Result" columns.
+Re-checked 2026-10-14 in Phase 10: this session still has no browser or computer-use tool, the Notion connector's block format has no button block, and no connector tool creates database templates or sets page font or locking.
+
+**Build kit in Notion:** "Template and button build kit (seller only)" under LifeOS SELLER NOTES holds all 11 template bodies as ready-made Notion blocks inside toggles (open, select all, copy, paste into the new template), a button table and a test checklist. It is outside the product and is not copied to buyers.
+
+Order of work: build everything in the **dev master** first, test it, then regenerate both editions from the master (see `CUSTOMER_PACKAGE_INVENTORY.md`). The RC1 editions made in Phase 10 do not have buttons or templates and must be replaced. Nothing below has been built or tested. Every item stays **INCOMPLETE** until the owner builds it in the Notion app and records the result in the "Result" columns.
 
 Build everything in the **dev copy** ("LifeOS - All-in-One Life Planner [DEV, do not sell]"), never in the original "Notion Life Hub". Buttons and templates are on Notion's free plan, but confirm that during the free-account duplication test (`CUSTOMER_DUPLICATION_QA.md`).
 

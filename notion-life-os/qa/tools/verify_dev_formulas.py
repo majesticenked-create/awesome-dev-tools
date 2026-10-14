@@ -7,12 +7,18 @@ view filter (Notion view DSL) per database. Each filter is an OR of one group
 per row: (title = row AND formula = expected ...). If the view returns every
 row, every live value equals the expected value. A missing row is a mismatch.
 
-Usage: python3 -I verify_dev_formulas.py 2026-10-14
+Usage: python3 -I verify_dev_formulas.py 2026-10-14 [--text-only]
+
+--text-only drops every "zz QA probe" condition, so the filters check only
+the visible text formulas (status labels, bars, Budget status, Due, Expiry and
+so on). Use it to verify a customer edition without adding probe columns.
 """
 import sys
 from datetime import date, timedelta
 
-TODAY = date.fromisoformat(sys.argv[1] if len(sys.argv) > 1 else "2026-10-14")
+ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+TEXT_ONLY = "--text-only" in sys.argv
+TODAY = date.fromisoformat(ARGS[0] if ARGS else "2026-10-14")
 d = date.fromisoformat
 
 
@@ -51,6 +57,8 @@ def dsl(title_prop, rows):
     for title, conds in rows:
         parts = [f"{q(title_prop)} = {q(title)}"]
         for prop, op, val in conds:
+            if TEXT_ONLY and prop == "zz QA probe":
+                continue
             parts.append(f"{q(prop)} IS EMPTY" if op == "empty" else f"{q(prop)} {op} {q(val)}")
         groups.append("(" + " AND ".join(parts) + ")")
     return "FILTER " + " OR ".join(groups)
