@@ -83,6 +83,15 @@ Full list of what's included in the 51-page moving planner, from the clickable c
 How the instant digital download works in 3 steps: purchase on Etsy, download the US Letter and A4 PDFs plus quick-start guide, then fill in on any device or print. No physical item is shipped.
 ```
 
+## Listing videos
+
+Etsy allows one video per listing (5 to 15 seconds, played without sound). Two options are included; pick one, or swap them later to see which converts better.
+
+| File | Concept | Length |
+|---|---|---|
+| `videos/01-flip-through.mp4` | Title card, 7 key pages slide past with captions, "51 pages. One calm move." end card | 14.0 s |
+| `videos/02-type-tick-label.mp4` | Fillable demo on a tablet: typing, ticking checklist boxes, filling a box label, then a "Type it. Tick it. Or print it." end card | 14.6 s |
+
 ## Description
 
 ```
