@@ -1,16 +1,16 @@
 # Final System Inventory (dev copy, release candidate)
 
-Hub: "Life Hub DEV (working copy, do not sell)" `3f9570f2a42981e5a009c25cc8874f3b`. IDs in `DEV_ID_MAP.md`.
+Hub: "LifeOS - All-in-One Life Planner [DEV, do not sell]" `3f9570f2a42981e5a009c25cc8874f3b` (renamed in Phase 9). IDs in `DEV_ID_MAP.md`.
 
 ## Pages
 
 | Page | Contents after changes |
 |---|---|
-| Hub | Welcome; Today at a glance (Due today and overdue, Today's habits); Quick actions (text links); Life overview (Goals in motion with Goal health, Active projects, Coming up this week, Life balance); Explore your Life Hub (navigation) |
-| Start Here | Rewritten: what's included, structure, first five steps, personalization, tasks, goals, habits, money definitions, reviews, automatic vs manual table, phone, sample-data removal, troubleshooting, FAQ |
+| Hub | Welcome; Today at a glance (Due today and overdue, Today's habits); Quick actions (text links); Life overview (Goals in motion with Goal health, Active projects, Coming up this week, Life balance); Explore LifeOS (navigation); secondary line "LifeOS - All-in-One Life Planner · A Notion template" |
+| Start Here | Rewritten: what's included, structure, first five steps, personalization, tasks, goals, habits, money definitions, reviews, automatic vs manual table, phone, sample-data removal, troubleshooting, FAQ (one chart, free-plan note), About LifeOS (non-affiliation) |
 | Today | Unchanged layout; tasks view excludes canceled; renewals use Due this week; birthdays filtered |
 | Plan | Goals board shows Goal health and Measure; Tasks block has 4 tabs: Open tasks, Focus: high priority, Inbox (no date), Calendar |
-| Mind | Unchanged (Habit trend chart pending D-24 decision) |
+| Mind | Habit trend chart removed (Phase 9, approved). Journal, Habit tracker (with Habit Bar), Library, Ideas unchanged |
 | Body & Home | Unchanged |
 | Money | New money-type callout; Budget view shows Budget status, Spent, Saved or repaid, Remaining; Subscriptions show Next charge; Money goals show Goal status and Remaining; Spending chart excludes Savings |
 | Life Admin | Copy fix only |
@@ -37,7 +37,7 @@ Counts now: 21 databases, 32 formulas, 11 rollups, 20 relation properties. All e
 
 ## New views
 
-Hub: Due today and overdue, Today's habits, Active projects. Plan Tasks block: Focus: high priority, Inbox (no date), Calendar. Daily Log database: All days, newest first (spot duplicates).
+Hub: Due today and overdue, Today's habits, Active projects. Removed in Phase 9: Mind → Habit trend (chart). Charts in the product: 1 (Money → Spending by category). Plan Tasks block: Focus: high priority, Inbox (no date), Calendar. Daily Log database: All days, newest first (spot duplicates).
 
 ## Buttons and templates
 

@@ -27,3 +27,5 @@ Guard rule: every dev collection ID has the shape `???570f2-a429-8???-…`. Prod
 | Lists | 1d7570f2-a429-8291-bccf-07f3354784c0 | 3e03598c-bc46-4e2c-b757-30cd8c237a47 |
 
 Dev pages: Hub 3f9570f2a42981e5a009c25cc8874f3b, Today 8cf570f2a429836cb2cc01bdcdb88b29, Plan 6f2570f2a4298383bd290174b43ad574, Mind 1f7570f2a42983c29051812813d481b7, Body & Home 2e4570f2a429830d997401282dfef3b0, Money a1b570f2a42983399209819a9912581b, Life Admin 9f6570f2a4298268a72a011fb4bbbc0c, Start Here 996570f2a42983309df6817bb41d499d, Databases 1dd570f2a42982618686014006a14283, Checklist c94570f2a4298372969a817d4e907399.
+
+Seller-only QA pages (Phase 9, outside the product): QA harness 3f9570f2a429811ba542d70b9555b1c0; QA TEMP records archive 3f9570f2a4298126a236c5f8775b7469. Both live under LifeOS SELLER NOTES 3f9570f2a4298103bfd1ccdac64d9b26. Production hub (read only): 3f9570f2a4298179a432e8850ede84e4.

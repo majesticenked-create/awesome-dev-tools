@@ -1,36 +1,43 @@
-# Customer Duplication QA
+# Customer Duplication QA (Phase 9D)
 
 ## Status: NOT PERFORMED
 
-No second Notion account was available in this session. Rule 7.6 requires an independent account, ideally on the free plan.
+Checked 2026-10-14. This session has access to one Notion workspace only (the seller's). There is no second Notion account, free or otherwise, and no browser to sign in to one. A duplication test needs an independent account, so it was not run. Neither edition has been duplicated into another account. Free-plan chart behavior has not been tested in any workspace.
 
-## Partial evidence (same account, same workspace)
+Nothing below is marked passed.
 
-The dev copy was created with Notion's native Duplicate. Checked by API afterwards:
+## Evidence available from the seller's workspace (not a substitute)
 
-| Check | Result |
-|---|---|
-| All 10 pages copied | Yes |
-| All 21 databases copied with records | Yes |
-| Relations point to the copied databases, not the originals | Yes (every schema checked) |
-| Rollups point to the copied databases | Yes |
-| All 33 linked views point to copied databases | Yes |
-| Formulas carried over | Yes (present in schema) |
+| Check | Result | How |
+|---|---|---|
+| Dev copy made by native Duplicate has all 10 pages and 21 databases | Yes (Phase 2) | Fetch |
+| Relations, rollups and all linked views point at the copy's own databases | Yes (Phase 2, re-checked for views changed in Phase 9) | Fetch |
+| Seller-only pages (SELLER NOTES, Finishing checklist, QA harness, QA TEMP records) are outside the product tree | Yes | They sit under "LifeOS SELLER NOTES", which is a separate top-level page; the hub fetch shows no link to it |
+| One chart left in the product | Yes | Mind and Money pages fetched; source databases Budget Categories and Daily Log have no chart tabs |
 
-Same-workspace duplication is not the same as a buyer duplicating a public template into their own workspace, so this does not replace the real test.
+## Test script for each edition (Example, then Blank), in a separate free account
 
-## Checklist for the real test (second free account)
+Record date, account plan, device and browser for each run.
 
-1. In the release candidate: Share → Publish → Allow duplicate as template. Copy the link.
-2. In a private window, sign in to the second free account and open the link. Click Duplicate.
-3. Check:
-   - [ ] All pages exist: Hub, Start Here, Today, Plan, Mind, Body & Home, Money, Life Admin, Databases
-   - [ ] No SELLER NOTES or Finishing checklist
-   - [ ] Each linked view opens the buyer's copy (edit a sample row in Today; it changes in Databases)
-   - [ ] Tick a task Done; project and goal progress change
-   - [ ] Add an expense; budget row updates
-   - [ ] Buttons create rows in the buyer's databases (after D-02)
-   - [ ] Templates appear under New ▾ (after D-03)
-   - [ ] No upgrade prompt appears (watch for charts, D-24)
+1. In the release candidate: Share → Publish → turn on "Allow duplicate as template". Copy the link. **Requires your approval; do not share it publicly.**
+2. In a private window, sign in to the free test account and open the link. Click Duplicate.
+3. Check, ticking only what you actually saw:
+   - [ ] Pages: Hub, Start Here, Today, Plan, Mind, Body & Home, Money, Life Admin, Databases
+   - [ ] No SELLER NOTES, checklist, QA harness or QA TEMP pages anywhere
+   - [ ] Hub title reads "LifeOS - All-in-One Life Planner" with no DEV marker
+   - [ ] Each linked view opens the buyer's own copy (edit a sample row in Today; the change shows in Databases)
+   - [ ] Tick "Tempo run, 20 min" Done: Run a 10K goal goes from 50% to 75%; 10K training plan project goes from 50% to 75% (Example edition)
+   - [ ] Add an Expense of 10 to Groceries: Budget shows "On track: 187.45 left" (Example edition)
+   - [ ] Buttons B1 to B4 create rows in the buyer's databases
+   - [ ] Templates appear under New ▾ and the defaults apply
    - [ ] Start Here links open the buyer's pages
-4. Record results here with date, account plan and device.
+   - [ ] **Chart, workspace with no other chart:** Money → Spending by category displays, with no upgrade prompt
+   - [ ] **Chart, workspace that already has one chart:** record exactly what Notion shows (upgrade prompt, locked chart, or nothing). Then delete the LifeOS chart and confirm the Budget table still shows all values
+   - [ ] No other upgrade prompt anywhere
+4. Phone (iOS or Android app): open Today and the Hub; note any view that needs sideways scrolling.
+
+## Results
+
+| Run | Edition | Account plan | Workspace had a chart already? | Device | Result |
+|---|---|---|---|---|---|
+| none yet | | | | | NOT PERFORMED |

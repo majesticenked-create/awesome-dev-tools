@@ -11,7 +11,9 @@ Environment: Claude Code cloud session, Notion connector (API). No browser sessi
 | Quick-action mentions point at dev databases (Tasks, Transactions, Daily Log) and dev Today | Read mention URLs | PASS |
 | All linked views use dev collections | Fetched every page and changed view | PASS |
 | No links to production or deleted pages | Read all mention and page URLs on hub and Start Here | PASS |
-| Hub section order: Welcome, Today at a glance, Quick actions, Life overview, Explore | Fetched hub after fix | PASS (first attempt came out mis-ordered and was corrected; see CHANGELOG) |
+| Hub section order: Welcome, Today at a glance, Quick actions, Life overview, Explore LifeOS | Fetched hub after fix and again after the Phase 9 rename | PASS (first attempt came out mis-ordered and was corrected; see CHANGELOG) |
+| Phase 9: all 8 hub links and the Start Here, Tasks, Today, Transactions and Daily Log mentions still resolve after the rename | Fetched hub 2026-10-14 | PASS |
+| Phase 9: Mind page has no orphan heading after the chart removal | Fetched Mind 2026-10-14 | PASS |
 
 ## Visual checks (from page structure only)
 

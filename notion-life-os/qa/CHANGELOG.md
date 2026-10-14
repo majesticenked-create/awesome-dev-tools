@@ -52,3 +52,32 @@ All changes are in the dev copy unless marked PRODUCTION.
 
 ### Repo
 - `qa/` folder: Phase 1 audit (01 to 06), final reports, `TEMPLATES_TO_CREATE.md`, `DEV_ID_MAP.md`, `tools/expected_values.py`.
+
+## 2026-10-14, Phase 9 (owner decisions approved)
+
+### Charts (approved decision 1)
+- Removed the "Habit trend" heading and its linked chart view from Mind. The Daily Log data, the Habit tracker view and its Habit Bar column are unchanged (read back after the change).
+- The customer template now has one chart: Money → Spending by category.
+- Start Here FAQ rewritten: lists the single chart, explains that Notion may ask to upgrade if the buyer's workspace already has a chart, and that LifeOS works without it. It does not claim universal free-plan compatibility.
+
+### Name (approved decision 2)
+- Dev hub renamed "LifeOS - All-in-One Life Planner [DEV, do not sell]". The DEV marker is dropped only in a release copy.
+- Hub: secondary line "LifeOS - All-in-One Life Planner · A Notion template"; "Explore your Life Hub" → "Explore LifeOS".
+- Start Here: intro now "Welcome to LifeOS, your all-in-one life planner"; new "About LifeOS" section with a non-affiliation notice.
+- Databases page callout: "Life Hub" → "LifeOS".
+- Seller notes renamed "LifeOS SELLER NOTES (not part of the product)"; checklist updated (chart decision done, edition plan, release title).
+- Only titles and text changed. No page or database was moved, so links and relations are unaffected (hub fetch shows all 8 links and mentions resolving).
+
+### Editions (approved decision 3)
+- Plan recorded in `CUSTOMER_PACKAGE_INVENTORY.md`: Example edition is the master; a Blank edition is generated for each release. Not generated yet (see Phase 9D).
+
+### Verification (Phase 9B)
+- Built a seller-only "QA harness" page with linked filter views (view-mode queries, no quota).
+- Temporarily added a text formula "zz QA probe" to 9 dev databases to expose number and date results. Removed afterwards; schemas read back without it.
+- 79/79 sample rows and 46/46 edge cases matched the independent calculator (`tools/verify_dev_formulas.py`). Negative control returned 0 rows.
+- 53 temporary "QA TEMP" records were created for edge cases, then moved out of the databases to a seller-only archive page. Nothing deleted. Dev databases back to the original sample data (edge views empty, sample values re-checked).
+
+### Docs
+- `BUTTON_AND_TEMPLATE_QA.md` rewritten as a step-by-step build and verification guide (all items INCOMPLETE).
+- New: `TEST_MATRIX.md`, `PRODUCTION_INTEGRITY_CHECK.md`, `tools/verify_dev_formulas.py`.
+- Updated: defect register, formula results, release readiness, package inventory, duplication QA, inventory, navigation.

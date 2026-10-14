@@ -104,7 +104,7 @@ Counts: 21 databases, 22 formula properties, 4 rollups, 20 relation properties (
 | Library | 5 | Documents | 4 |
 | Ideas & Inspo | 4 | Trips | 2 |
 | Workouts | 4 | Lists | 12 |
-| Recipes | 5 | **Total** | **131** |
+| Recipes | 5 | **Total** | **120** (corrected 2026-10-14; earlier "131" was an addition error) |
 
 All sample dates cluster around 2026-10-14. Every sample person and brand is fictional or generic.
 
