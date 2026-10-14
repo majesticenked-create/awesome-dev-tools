@@ -402,7 +402,7 @@ def img9_contents(pk):
 def img10_how(pk):
     img = canvas(CREAM)
     d = header(img, "Instant digital download", "How it works")
-    where = "in Etsy > Purchases." if MARKET == "etsy" else "in your Creative Market downloads."
+    where = "in Etsy > Purchases." if MARKET == "etsy" else "on Creative Market."
     steps = [("1", "Purchase", "Your files are ready right away\n" + where),
              ("2", "Download", "Two PDFs: US Letter and A4,\nplus a quick-start guide."),
              ("3", "Fill or print", "Type on any device, or print\nonly the pages you need.")]
@@ -416,7 +416,10 @@ def img10_how(pk):
         text_c(d, cx, 735, n, SERIF_B(150), CLAY)
         text_c(d, cx, 1010, h, SERIF(96))
         for j, line in enumerate(body.split("\n")):
-            text_c(d, cx, 1180 + j * 76, line, SANS(48), MUTED)
+            size = 48
+            while d.textlength(line, font=SANS(size)) > bw - 80:  # never spill past the card
+                size -= 1
+            text_c(d, cx, 1180 + j * 76, line, SANS(size), MUTED)
     note = "No physical item will be shipped." + (" For personal use only." if MARKET == "etsy" else "")
     text_c(d, W / 2, 1810, note, SANS_M(46), MUTED)
     save(img, "10-how-it-works.jpg")
