@@ -133,3 +133,67 @@ for name, tgt, cur, td in [("Emergency fund",6000,2150,"2027-03-31"),("Credit ca
 print("\n## Life Areas.Balance")
 for name, s in [("Health",6),("Mind",7),("Relationships",8),("Career",6),("Money",5),("Home",6),("Fun & Creativity",4),("Growth",7)]:
     print(f"- {name}: {'●'*s}{'○'*(10-s)}")
+
+# ---------------------------------------------------------------------------
+# Post-fix expectations (dev copy after Phase 2 to 5 changes)
+# ---------------------------------------------------------------------------
+print("\n# POST-FIX EXPECTATIONS (dev copy)\n")
+
+print("## Budget (Savings auto-transfer re-typed as Savings)")
+spent = {"Rent":1200.00,"Groceries":202.55,"Transport":113.50,"Eating out":73.80,"Fun & hobbies":93.00,"Savings":0.00,"Salary":0.00}
+saved = {"Savings":300.00}
+for cat, b in budgets.items():
+    s = spent[cat]; sv = saved.get(cat, 0.0); act = round(s + sv, 2)
+    if not b:
+        status = "No budget set"
+    elif act > b:
+        status = f"⚠ Over by {round(act-b,2):g}"
+    elif act == b:
+        status = "✓ Fully used"
+    else:
+        status = f"On track: {round(b-act,2):g} left"
+    print(f"- {cat}: spent {s:.2f}, saved/repaid {sv:.2f}, actual {act:.2f}, status '{status}'")
+print(f"- Consumption spending (sum of Spent this month): {sum(spent.values()):.2f}")
+
+print("\n## Goals (Progress Bar / Goal health)")
+goals = [("Run a 10K","Tasks",4,2,0,0,None,"2026-12-06"),("Emergency fund","Tasks",2,1,0,1,None,"2027-03-31"),
+         ("Read 24 books","Number",1,0,0,0,(0,24,14),"2026-12-31"),("Redecorate bedroom","Tasks",2,0,0,1,None,"2026-12-20"),
+         ("Pottery","Tasks",0,0,0,0,None,None)]
+for name, meas, tot, done, canc, projs, num, td in goals:
+    if meas == "Number":
+        s, t, c = num; ready = t != s; p = max(0, (c - s) / (t - s)) if ready else 0
+    else:
+        open_ = tot - canc; ready = open_ > 0 or projs > 0; p = min(done / open_, 1) if open_ > 0 else 0
+    pb = (bar(min(p, 1)) + f"  {round(p*100)}%") if ready else ("Set start and target values" if meas == "Number" else "No tasks linked yet")
+    if ready and p >= 1:
+        h = "✓ Completed"
+    elif not ready:
+        h = "Not enough information"
+    elif td and days(d(td), TODAY) < 0:
+        h = "⚠ Needs attention: past target date"
+    elif td and days(d(td), TODAY) <= 14 and p < 0.75:
+        h = "⚠ Needs attention: due soon"
+    else:
+        h = "On track"
+    print(f"- {name}: '{pb}' | {h}")
+
+print("\n## Subscriptions.Due this week (next charge within 7 days, not Paused/Cancelled)")
+for name, nxt, status in [("Streaming","2026-10-19","Active"),("Music","2026-10-28","Active"),("Cloud storage","2027-02-03","Active"),
+                          ("Gym","2026-10-16","Trial"),("Weekend newspaper","2026-10-17","Cancel soon")]:
+    dd = days(d(nxt), TODAY)
+    print(f"- {name}: next charge {nxt} (in {dd}d) -> {'Yes' if dd <= 7 and status not in ('Paused','Cancelled') else ''}")
+
+print("\n## Money Goals Remaining / Goal status")
+for name, tgt, cur in [("Emergency fund",6000,2150),("Credit card payoff",1800,900),("Japan trip fund",3500,600)]:
+    print(f"- {name}: remaining {max(0,tgt-cur)}, status {'✓ Reached' if cur >= tgt else 'In progress'}")
+
+print("\n## Edge cases to probe with temporary records")
+print("- Contact born 2000-02-29, checked on 2027-02-01: next birthday 2027-02-28 (non-leap year policy)")
+print("- Contact born 1990-12-31 checked on 2026-12-31: Days to birthday 0, Birthday soon 'Soon'")
+print("- Subscription Monthly, Next renewal 2026-08-10, today 2026-10-14: Next charge 2026-11-10")
+print("- Subscription Monthly, Next renewal 2026-08-14, today 2026-10-14: Next charge 2026-10-14 (today)")
+print("- Subscription Weekly $5: Monthly cost 21.67, Yearly cost 260.00; Paused: both 0")
+print("- Money goal Target 1000, Current 1200: Progress 100% bar, Remaining 0, Per month needed 0, status ✓ Reached")
+print("- Home Care with Every empty: Due 'Set how often (Every)'")
+print("- Task Canceled on a 4-task project with 3 done: project 100%")
+print("- Number goal Start 82, Target 70, Current 76: progress 50%")
