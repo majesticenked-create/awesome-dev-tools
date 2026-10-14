@@ -1,12 +1,13 @@
-# Atelier Life OS — Notion Build Spec
+# Notion Life Hub — Notion Build Spec
 
-Working title: **Atelier Life OS** (rename freely before launch).
+Product name: **Notion Life Hub** (chosen by the seller).
 Look: warm editorial — cream backgrounds, serif headings, muted brown/sage accents.
 Goal: an original, fully linked "life OS" Notion template to sell on Etsy. Inspired by the
 *category* of all-in-one life hubs, but with original naming, structure, layouts and copy.
 
-> **For the Claude session that builds this:** use the Notion connector. Create one top-level
-> page "Atelier Life OS", then build in this order: databases (section 2, in listed order so
+> **Status: built in Notion on 2026-10-14** (see Build log at the end).
+> **For a Claude session rebuilding this:** use the Notion connector. Create one top-level
+> page "Notion Life Hub", then build in this order: databases (section 2, in listed order so
 > relations resolve), then pages (section 3), then sample data (section 4). Anything the
 > connector cannot do (buttons, some view types, progress-bar display) goes into the
 > "Finishing checklist" page (section 5) — do not skip silently.
@@ -16,7 +17,7 @@ Goal: an original, fully linked "life OS" Notion template to sell on Etsy. Inspi
 ## 1. Structure
 
 ```
-Atelier Life OS (Hub)
+Notion Life Hub (Hub)
 ├── ✦ Start Here (quick start, FAQ)
 ├── ☀ Today
 ├── ◎ Plan        → Life Areas, Goals, Projects, Tasks, Reviews
@@ -421,3 +422,27 @@ item that could not be built via the connector, for example:
 - Tiers: Lite (Today + Plan + Mind) · Complete · Bundle (Complete + both cover sets + Canva kit).
 - Title, 13 tags and description from keyword research.
 - Disclose AI-assisted creation in the description per Etsy's creativity standards.
+
+---
+
+## 7. Build log (2026-10-14)
+
+Built via the Notion connector into a private top-level page "Notion Life Hub".
+Deviations from the spec above, and why:
+
+- **Progress (Goals, Projects)** is a *rollup* (`Tasks → Done → percent checked`), not a
+  formula. The API rejects formulas that read properties of related pages
+  (`prop("Tasks").filter(current.prop("Done"))` → "Type error with formula").
+- **Budget "Spent this month"** is a rollup (sum) of a per-transaction formula
+  `Spent this month` = Amount if Type = Expense and Date is in the current month, else 0.
+- **Life Areas "Active Goals"** replaced by `Goal Count` rollup (count).
+- **Daily Log** uses `Habits Done` (0–5) + `Habit Bar`; no 0–1 score.
+- **Home Care** label property is named `Due`; **Documents** label is `Expiry`.
+- **Contacts** gained a `Birthday soon` checkbox formula; the API silently drops view
+  filters on formula properties, so the Today "Birthdays soon" filter must be set by hand.
+- A formula can't reference a property added in the same DDL batch — add in two steps.
+- Linked views can't be placed via `<database data-source-url>` markdown; they're appended
+  with create-view, so pages were built heading → view → heading → view.
+- Not possible via API (listed on the in-Notion "Finishing checklist" page): buttons,
+  database templates, column footers, hiding view titles, serif font / full width,
+  page locking, publish + "Allow duplicate as template".
