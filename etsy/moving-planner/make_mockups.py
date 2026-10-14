@@ -114,7 +114,12 @@ def header(img, kicker, title, sub=None, y=120):
     return d
 
 
+SHOP = "CropUp Creative"
+
+
 def save(img, name):
+    d = ImageDraw.Draw(img)
+    caps(d, W / 2, H - 110, SHOP, SANS_SB(38), MUTED, 10, center=True)
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, name)
     img.save(path, "JPEG", quality=90, optimize=True)
@@ -151,7 +156,7 @@ def img1_hero(pk):
     caps(d, x, 300, "Printable + fillable", SANS_SB(46), SAGE, 9)
     d.text((x, 380), "Moving", font=SERIF(250), fill=INK)
     d.text((x, 620), "Planner", font=SERIF(250), fill=INK)
-    d.text((x + 8, 900), "The Calm Move", font=SERIF_I(84), fill=CLAY)
+    d.text((x + 8, 900), "The Calm Move by " + SHOP, font=SERIF_I(72), fill=CLAY)
     y = 1100
     for s in ["51 pages, week-by-week timeline", "Color-coded box labels + room signs",
               "Type on screen or print it out", "US Letter + A4 included", "Clickable contents & tabs"]:

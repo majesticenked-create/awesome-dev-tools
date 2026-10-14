@@ -32,7 +32,7 @@ moving planner, moving checklist, moving binder, box labels printable, moving la
 ## Description
 
 ```
-Make your move calm, organized and stress-free.
+Make your move calm, organized and stress-free, with THE CALM MOVE by CropUp Creative.
 
 THE CALM MOVE is a 51-page moving planner that runs your whole move, from 8 weeks out to your first month in the new home. Type into it on your laptop or tablet, or print it and write by hand. Both US Letter and A4 sizes are included.
 
@@ -104,10 +104,13 @@ LABELS & SIGNS
 ★ PLEASE NOTE ★
 • This is a DIGITAL DOWNLOAD. No physical item will be shipped.
 • Colors may vary slightly depending on your screen and printer.
-• For personal use only. Please do not share or resell.
+• © 2026 CropUp Creative. For personal use only. Please do not share or resell.
 • Because this is a digital item, returns are not accepted. If anything is wrong with your files, message me and I'll make it right.
 
 Moving is a lot. This planner makes it a little calmer. Happy moving! 🏡
+
+♡ CropUp Creative
+Follow the shop for new planners and printables.
 ```
 
 ## Launch checklist

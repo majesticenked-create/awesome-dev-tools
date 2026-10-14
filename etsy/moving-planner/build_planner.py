@@ -48,7 +48,8 @@ ROOMS = [
     ("O", "Office", "#D9C4A7"), ("G", "Garage / Storage", "#C2C3BA"),
 ]
 
-BRAND = "THE CALM MOVE"
+SHOP = "CropUp Creative"
+BRAND = "THE CALM MOVE  ·  " + SHOP.upper()
 
 
 def wrap(text, font, size, width):
@@ -69,7 +70,8 @@ class Planner:
     def __init__(self, path, pagesize):
         self.c = canvas.Canvas(path, pagesize=pagesize)
         self.c.setTitle("The Calm Move: Moving Planner")
-        self.c.setAuthor("The Calm Move")
+        self.c.setAuthor(SHOP)
+        self.c.setCreator(SHOP)
         self.c.setSubject("Printable & fillable moving planner")
         self.W, self.H = pagesize
         self.M = 40
@@ -557,7 +559,10 @@ def p_cover(p):
     for lbl in ["Moving from", "Moving to", "Moving day"]:
         p.field_line(x, y, fw, lbl, 82)
         y -= 34
-    p.caps(W / 2, M + 4, "Fillable  ·  Printable  ·  Color-coded box system", MUTED, 7, "center")
+    p.caps(W / 2, M + 26, "Fillable  ·  Printable  ·  Color-coded box system", MUTED, 7, "center")
+    p.text(W / 2, H * 0.38 - 168, "by " + SHOP, "Serif-Italic", 13, CLAY, "center")
+    p.text(W / 2, M + 4, f"© 2026 {SHOP}. For personal use only. Please do not share or resell.",
+           "Sans", 6.8, MUTED, "center")
 
 
 def p_contents(p, toc):
@@ -1387,13 +1392,13 @@ def build_readme(path):
                      "and signs look best in color; everything else prints well in black and white."),
         ("Box labels tip", "Print labels on sticker paper (full-sheet label paper), or on plain paper and attach "
                            "them with clear packing tape. Put one on top and one on the side of each box."),
-        ("Terms of use", "For personal use only. Please don't share, resell or redistribute the files. "
+        ("Terms of use", f"© 2026 {SHOP}. For personal use only. Please don't share, resell or redistribute the files. "
                          "No physical item will be shipped."),
     ]
     for h, body in blocks:
         p.text(p.M, y, h, "Serif-Bold", 13)
         y = p.para(p.M, y - 17, body, p.CW, 9.6, color=MUTED) - 14
-    p.tip(p.M, y, p.CW, "Questions or a problem with your files? Message me through Etsy and I'll help. "
+    p.tip(p.M, y, p.CW, f"Questions or a problem with your files? Message {SHOP} through Etsy and I'll help. "
                         "If the planner made your move calmer, a review means the world to a small shop.", "Help")
     p.save()
 
