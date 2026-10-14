@@ -201,44 +201,67 @@ def box_label_sticker(w, h, color, code, room, note):
 
 
 def img1_hero(pk):
+    """Square hero (3000x3000) so Etsy's square thumbnail crop shows everything."""
+    global W, H
+    saved = (W, H)
+    W, H = 3000, 3000
+    try:
+        _hero(pk)
+    finally:
+        W, H = saved
+
+
+def _hero(pk):
+    oy = 250
     img = soft_background((250, 246, 240), (245, 236, 226), [
-        (2350, 380, 700, (214, 230, 220, 255)),
-        (2050, 2050, 620, (247, 221, 207, 255)),
-        (420, 2050, 480, (246, 234, 206, 200)),
+        (2450, 420, 820, (214, 230, 220, 255)),
+        (2100, 2750, 760, (247, 221, 207, 255)),
+        (420, 2700, 560, (246, 234, 206, 200)),
     ])
     d = ImageDraw.Draw(img)
-    # ---- copy (left, inside the square-crop safe zone x 375..2625)
-    x = 400
-    caps(d, x + 4, 330, "Printable + fillable", SANS_SB(46), SAGE, 9)
-    d.text((x - 6, 390), "Moving", font=SERIF(270), fill=INK)
-    d.text((x - 6, 650), "Planner", font=SERIF(270), fill=INK)
-    d.text((x + 4, 965), "The Calm Move", font=SERIF_I(96), fill=CLAY)
-    y = 1150
+    # ---- copy (left)
+    x = 260
+    caps(d, x + 4, 330 + oy, "Printable + fillable", SANS_SB(52), SAGE, 10)
+    d.text((x - 8, 400 + oy), "Moving", font=SERIF(300), fill=INK)
+    d.text((x - 8, 690 + oy), "Planner", font=SERIF(300), fill=INK)
+    d.text((x + 4, 1035 + oy), "The Calm Move", font=SERIF_I(108), fill=CLAY)
+    y = 1250 + oy
     for s, col in [("51 pages", CLAY), ("Fillable + printable", SAGE), ("US Letter + A4", (184, 149, 74)),
                    ("Color-coded box labels", (111, 136, 160))]:
-        f = SANS_SB(46)
-        w = d.textlength(s, font=f) + 2 * 40 + 40
-        d.rounded_rectangle([x, y, x + w, y + 100], radius=50, fill=WHITE)
-        d.ellipse([x + 34, y + 37, x + 60, y + 63], fill=col)
-        d.text((x + 80, y + 24), s, font=f, fill=INK)
-        y += 124
+        f = SANS_SB(52)
+        w = d.textlength(s, font=f) + 130
+        d.rounded_rectangle([x, y, x + w, y + 112], radius=56, fill=WHITE)
+        d.ellipse([x + 38, y + 41, x + 68, y + 71], fill=col)
+        d.text((x + 90, y + 26), s, font=f, fill=INK)
+        y += 140
+    # room color swatches: the box system at a glance
+    y += 60
+    caps(d, x + 4, y, "8 color-coded rooms", SANS_SB(40), MUTED, 8)
+    y += 70
+    sw = 112
+    for i, (code, col) in enumerate([("K", "#E9B49E"), ("L", "#A9C5B2"), ("D", "#EBD394"), ("B1", "#A9C0D8"),
+                                     ("B2", "#CBB8D8"), ("BA", "#9ED2CD"), ("O", "#D9C4A7"), ("G", "#C2C3BA")]):
+        sx = x + i * (sw + 14)
+        d.rounded_rectangle([sx, y, sx + sw, y + sw], radius=22, fill=col)
+        f = SERIF_B(54 if len(code) == 1 else 44)
+        tw = d.textlength(code, font=f)
+        bb = d.textbbox((0, 0), code, font=f)
+        d.text((sx + (sw - tw) / 2, y + (sw - (bb[3] - bb[1])) / 2 - bb[1]), code, font=f, fill=INK)
     # ---- composition (right)
-    paste_page(img, page_img(pk["Room door signs 1"]), 1300, 330, 800, angle=9)
-    paste_page(img, page_img(pk["Special labels"]), 1980, 250, 800, angle=-8)
-    paste_page(img, page_img(1, dpi=200), 1560, 330, 900)
-    # loose cut-out labels as props
-    paste_page(img, sticker(470, 270, (233, 180, 158), "FRAGILE", "Handle with care", SANS_B(72), SANS(34)),
-               1280, 1420, 470, angle=11)
-    paste_page(img, sticker(470, 270, (169, 197, 178), "OPEN FIRST", "Essentials inside", SANS_B(64), SANS(34)),
-               2150, 1430, 470, angle=-9)
-    paste_page(img, box_label_sticker(560, 380, (233, 180, 158), "K", "KITCHEN", "Pots & pans"),
-               1660, 1600, 560, angle=-3)
-    # badge on the cover corner
+    paste_page(img, page_img(pk["Room door signs 1"]), 1300, 380 + oy, 840, angle=9)
+    paste_page(img, page_img(pk["Special labels"]), 1990, 300 + oy, 770, angle=-8)
+    paste_page(img, page_img(1, dpi=220), 1450, 340 + oy, 1060)
+    paste_page(img, sticker(560, 320, (233, 180, 158), "FRAGILE", "Handle with care", SANS_B(86), SANS(40)),
+               1260, 1720 + oy, 560, angle=10)
+    paste_page(img, sticker(560, 320, (169, 197, 178), "OPEN FIRST", "Essentials inside", SANS_B(76), SANS(40)),
+               2290, 1680 + oy, 560, angle=-9)
+    paste_page(img, box_label_sticker(680, 460, (233, 180, 158), "K", "KITCHEN", "Pots & pans"),
+               1700, 1930 + oy, 680, angle=-3)
     d = ImageDraw.Draw(img)
-    cx, cy, r = 2420, 380, 150
+    cx, cy, r = 2500, 400 + oy, 170
     d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CLAY)
-    text_c(d, cx, cy - 112, "51", SERIF_B(140), WHITE)
-    caps(d, cx, cy + 50, "pages", SANS_SB(34), WHITE, 7, center=True)
+    text_c(d, cx, cy - 128, "51", SERIF_B(160), WHITE)
+    caps(d, cx, cy + 56, "pages", SANS_SB(38), WHITE, 8, center=True)
     save(img, "01-hero.jpg")
 
 
