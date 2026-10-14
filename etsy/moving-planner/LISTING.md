@@ -29,6 +29,60 @@ moving planner, moving checklist, moving binder, box labels printable, moving la
 | Photos (in this order) | `mockups/01-hero.jpg` … `mockups/10-how-it-works.jpg` |
 | Materials / attributes | Digital PDF; Occasion: Moving / housewarming |
 
+## Photo alt text
+
+In the photo editor, click each photo › **Add alt text** and paste the matching line (Etsy's limit is 250 characters; all of these fit).
+
+**1. `01-hero.jpg`** (204 characters)
+```
+Printable and fillable moving planner by CropUp Creative: The Calm Move cover with color-coded box labels, room door signs, Fragile and Open First stickers, 8 room color codes, 51 pages, US Letter and A4.
+```
+
+**2. `02-whats-inside.jpg`** (194 characters)
+```
+Grid of 21 pages from the moving planner, including move at a glance, home search, countdown calendar, weekly checklists, budget, mover quotes, box inventory, cleaning checklists and box labels.
+```
+
+**3. `03-box-system.jpg`** (188 characters)
+```
+Color-coded moving box system in 4 steps: room key with codes and colors, matching kitchen box labels, numbered box inventory log, and room door signs that tell movers where each box goes.
+```
+
+**4. `04-timeline.jpg`** (189 characters)
+```
+Week-by-week moving checklist pages: 8 weeks before, 4 weeks before, 1 week and day before, moving day hour-by-hour schedule, and after the move checklist for the first day, week and month.
+```
+
+**5. `05-fillable.jpg`** (170 characters)
+```
+Fillable moving planner PDF on a tablet showing the Move at a Glance page typed in with addresses, key dates and mover details. Type on screen or print and write by hand.
+```
+
+**6. `06-admin.jpg`** (186 characters)
+```
+Moving admin printables: moving budget tracker with estimated and actual costs, mover quote comparison for 3 companies, change of address checklist, and utilities stop and start tracker.
+```
+
+**7. `07-clean-settle.jpg`** (175 characters)
+```
+Move-out cleaning checklist, rental walk-through condition report for your deposit, furniture layout dot grid, and new home and neighborhood info page from the moving planner.
+```
+
+**8. `08-sizes.jpg`** (159 characters)
+```
+The Calm Move moving planner cover in two included sizes side by side: US Letter 8.5 x 11 inches and A4 210 x 297 mm, ready to print at home or at a copy shop.
+```
+
+**9. `09-whats-included.jpg`** (175 characters)
+```
+Full list of what's included in the 51-page moving planner, from the clickable contents and weekly checklists to 72 color box labels, 12 room door signs and 12 special labels.
+```
+
+**10. `10-how-it-works.jpg`** (193 characters)
+```
+How the instant digital download works in 3 steps: purchase on Etsy, download the US Letter and A4 PDFs plus quick-start guide, then fill in on any device or print. No physical item is shipped.
+```
+
 ## Description
 
 ```
